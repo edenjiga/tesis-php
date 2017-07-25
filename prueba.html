@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Registrar Entrada</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style type="text/css">
+        body { background-color:lightyellow;font-family:Arial;font-size:10pt; }
+        #codigo { text-align:center; }
+        #log { color:yellow;background-color:red;margin-bottom:10px; }
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function()
+        {
+            // Dar el foco al recuadro del código
+         
+            // -----------------------------
+            // Al hacer clic en el botón para buscar
+            $("#buscar").click(function()
+            {
+                $("#log").text( "cedula a Registrar: [" + name + "]" );
+
+                var user = $('#nombre').val();
+                var place = $('#cedula').val();
+                // Enviar la petición mediante POST
+                 $.ajax({
+                         async: true,
+                         type: "POST",
+                         dataType: "json",
+                         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                         url: "http://ceramicapiga.com/tesis/get_by_tag.php",
+                         data: "texto="+user+"&rarestring="+0+"&largepassword="+0+"&nuevasalt="+0,
+                         beforeSend: antesEnvio,
+                         success: mostrarDatos,
+                         timeout: 4000,
+                         error: errorEnvio
+                 });
+                return false;
+            });
+        });
+        // -----------------------------
+        // Antes de enviar los datos
+         function antesEnvio() {
+            $("#log").text("Agregando...");
+        }
+        // -----------------------------
+        // En caso de error
+         function errorEnvio() {
+            $("#log").text("Ha ocurrido un error!");
+        }
+        // -----------------------------
+        // Carga los datos recibidos en los cuadros de texto
+         function mostrarDatos( datos )
+        {
+			alert(datos.message);
+        }
+		
+		
+    </script>
+  </head>
+  <body>
+  <p>Introdusca los datos:</p>
+  <p>
+    <label for="herramienta">Nombre:</label>
+    <input name="nombre" type="text" id="nombre" value="" size="15" maxlength="100" />
+  </p>
+  <p>cedula
+    <input name="cedula" type="text" id="cedula" value="" size="15" maxlength="100" />
+  </p>
+  <p>
+    <input type="button" name="buscar" id="buscar" value="Registrar Entrada" />
+  </p>
+</body>
+</html>
